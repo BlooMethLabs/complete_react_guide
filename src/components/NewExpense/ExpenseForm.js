@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './ExpenseForm.css';
 
 const ExpenseForm = (props) => {
+  const [active, setActive] = useState(false);
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredPrice, setEnteredPrice] = useState('');
   const [enteredDate, setEnteredDate] = useState('');
@@ -11,6 +12,9 @@ const ExpenseForm = (props) => {
   //   enteredPrice: '',
   //   enteredDate: '',
   // });
+  if (!active) {
+    return <button onClick={() => setActive(true)}>Add New Expense</button>;
+  }
 
   const titleChangeHandler = (event) => {
     setEnteredTitle(event.target.value);
@@ -52,6 +56,15 @@ const ExpenseForm = (props) => {
     setEnteredTitle('');
     setEnteredPrice('');
     setEnteredDate('');
+    setActive(false);
+  };
+
+  const cancelHandler = (event) => {
+    event.preventDefault();
+    setEnteredTitle('');
+    setEnteredPrice('');
+    setEnteredDate('');
+    setActive(false);
   };
 
   return (
@@ -87,6 +100,9 @@ const ExpenseForm = (props) => {
         </div>
       </div>
       <div className="new-expense__actions">
+        <button type="cancel" onClick={cancelHandler}>
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
